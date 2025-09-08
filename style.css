@@ -90,3 +90,109 @@ blockquote{background:rgba(255,255,255,0.02);padding:12px;border-radius:8px;colo
   .nav-links{display:none}
   .nav-toggle{display:inline-block}
                                                         }
+/* ========================
+   Animations & interactive styles (paste at bottom)
+   ======================== */
+
+/* theme vars */
+:root{
+  --accent: #ff9800;
+  --bg1: #0f2027;
+  --bg2: #203a43;
+  --bg3: #2c5364;
+  --bg4: #1e3c72;
+  --text: #ffffff;
+}
+
+/* animated gradient background */
+html, body { height: 100%; }
+body {
+  color: var(--text);
+  background: linear-gradient(-45deg, var(--bg1), var(--bg2), var(--bg3), var(--bg4));
+  background-size: 400% 400%;
+  animation: gradientBG 20s ease infinite;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+/* slow moving gradient */
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* stars overlay (subtle) */
+.stars {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.30;
+  background-image:
+    radial-gradient(circle at 10% 20%, rgba(255,255,255,0.9) 1px, transparent 1px),
+    radial-gradient(circle at 40% 70%, rgba(255,255,255,0.7) 1px, transparent 1px);
+  background-repeat: repeat;
+  background-size: 4px 4px, 10px 10px;
+  animation: starsMove 80s linear infinite;
+}
+
+/* subtle star motion */
+@keyframes starsMove {
+  from { background-position: 0 0, 50px 80px; }
+  to   { background-position: 2000px 1000px, -2000px -1000px; }
+}
+
+/* make sure content floats above the overlay */
+.site-wrap, header, main, footer, .container {
+  position: relative;
+  z-index: 1;
+}
+
+/* floating micro motion for icons/cards */
+.floating { animation: floatY 6s ease-in-out infinite; }
+@keyframes floatY {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0); }
+}
+
+/* lively booking button */
+.book-btn {
+  --pad-x: 28px;
+  --pad-y: 12px;
+  display: inline-block;
+  background: linear-gradient(180deg, var(--accent), #e67e00);
+  color: #fff;
+  padding: var(--pad-y) var(--pad-x);
+  border-radius: 999px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 8px 22px rgba(0,0,0,0.28);
+  transition: transform .25s ease, box-shadow .25s ease;
+  text-decoration: none;
+}
+
+.book-btn:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.30), 0 8px 30px rgba(255,152,0,0.12);
+}
+
+.book-btn:active { transform: translateY(-2px) scale(0.99); }
+
+/* subtle pulse variation (add .pulse when you want more emphasis) */
+.book-btn.pulse { animation: pulse 3s infinite; }
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(255,152,0,0.28); }
+  70% { box-shadow: 0 0 0 20px rgba(255,152,0,0); }
+  100% { box-shadow: 0 0 0 0 rgba(255,152,0,0); }
+}
+
+/* parallax helper: we will move elements with data-parallax in JS */
+[data-parallax] { will-change: transform; }
+
+/* small responsive tweak */
+@media (max-width: 600px) {
+  .book-btn { --pad-x: 18px; --pad-y: 10px; font-size: 15px; }
+}
